@@ -1,3 +1,5 @@
+import 'package:chiya_talk/forgot_password.dart';
+import 'package:chiya_talk/home_screen.dart';
 import 'package:chiya_talk/registration_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -152,7 +154,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   textAlign: TextAlign.center,
                 ),
-                onPressed: () async {},
+                onPressed: () async {
+                  Navigator.pop(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const HomeScreen(),
+                    ),
+                  );
+                },
               ),
               Container(
                 margin: const EdgeInsets.all(20),
@@ -160,10 +169,17 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Forgotpassword(),
+                          ),
+                        );
+                      },
                       child: Text(
                         "Forgot Password",
-                        style: GoogleFonts.montserrat(
+                        style: GoogleFonts.acme(
                             color: Colors.blue, fontWeight: FontWeight.bold),
                       ),
                     ),
@@ -190,7 +206,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                       child: Text(
                         "Register here!",
-                        style: GoogleFonts.montserrat(
+                        style: GoogleFonts.acme(
                             color: Colors.blue, fontWeight: FontWeight.bold),
                       ),
                     )
