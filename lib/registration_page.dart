@@ -1,22 +1,28 @@
-import 'package:chiya_talk/registration_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegistrationPage extends StatefulWidget {
+  const RegistrationPage({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegistrationPage> createState() => _RegistrationPageState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegistrationPageState extends State<RegistrationPage> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
   bool _passwordVisible = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      appBar: AppBar(
+        // backgroundColor: Colors.black,
+        title: Text("Registration Page",
+            style: GoogleFonts.montserrat(
+                fontSize: 20, fontWeight: FontWeight.bold, color: Colors.blue)),
+        centerTitle: true,
+      ),
       body: GestureDetector(
         onTap: () {
           FocusScope.of(context).requestFocus(FocusNode());
@@ -25,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
           physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
-              SizedBox(
+              Container(
                 // padding: EdgeInsets.all(10),
                 //margin: const EdgeInsets.all(10),
                 width: double.infinity,
@@ -37,23 +43,55 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 300,
                 )),
               ),
-              Center(
-                child: Text(
-                  "Welcome Back !",
-                  style:
-                      GoogleFonts.montserrat(color: Colors.blue, fontSize: 20),
+              Container(
+                margin: const EdgeInsets.all(15),
+                child: TextFormField(
+                  style: const TextStyle(color: Colors.black),
+                  showCursor: false,
+                  controller: emailController,
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.blue,
+                      ),
+                    ),
+                    focusedBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.blue),
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 10.0, horizontal: 10.0),
+                    label: Text(
+                      "Email",
+                      style: GoogleFonts.montserrat(
+                          fontSize: 12,
+                          letterSpacing: 1.5,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    prefixIcon: const Icon(
+                      Icons.email_outlined,
+                      size: 20,
+                      color: Colors.black,
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value == "") {
+                      return "Email is required";
+                    }
+                    return null;
+                  },
                 ),
               ),
               Container(
-                margin: const EdgeInsets.all(20),
+                margin: const EdgeInsets.all(15),
                 child: TextFormField(
-                  style: const TextStyle(color: Colors.white),
+                  style: const TextStyle(color: Colors.black),
                   showCursor: false,
                   controller: usernameController,
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(
                       borderSide: BorderSide(
-                        color: Colors.white,
+                        color: Colors.blue,
                       ),
                     ),
                     focusedBorder: const OutlineInputBorder(
@@ -66,12 +104,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       style: GoogleFonts.montserrat(
                           fontSize: 12,
                           letterSpacing: 1.5,
-                          color: Colors.white),
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold),
                     ),
                     prefixIcon: const Icon(
                       Icons.account_circle_outlined,
                       size: 20,
-                      color: Colors.white,
+                      color: Colors.black,
                     ),
                   ),
                   validator: (value) {
@@ -83,7 +122,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               Container(
-                margin: const EdgeInsets.all(20),
+                margin: const EdgeInsets.all(15),
                 child: TextFormField(
                   style: const TextStyle(color: Colors.white),
                   showCursor: false,
@@ -103,12 +142,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         style: GoogleFonts.montserrat(
                             fontSize: 12,
                             letterSpacing: 1.5,
-                            color: Colors.white),
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold),
                       ),
                       prefixIcon: const Icon(
                         Icons.lock_open_outlined,
                         size: 20,
-                        color: Colors.white,
+                        color: Colors.black,
                       ),
                       suffixIcon: IconButton(
                         onPressed: () {
@@ -141,62 +181,19 @@ class _LoginScreenState extends State<LoginScreen> {
                     Colors.blue,
                   ),
                   fixedSize: MaterialStateProperty.all<Size>(
-                    const Size(278, 30),
+                    const Size(300, 30),
                   ),
                 ),
                 child: Text(
-                  "Login",
+                  "Register",
                   style: GoogleFonts.montserrat(
-                    letterSpacing: 1.3,
-                    color: Colors.white,
-                  ),
+                      letterSpacing: 1.3,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center,
                 ),
                 onPressed: () async {},
               ),
-              Container(
-                margin: const EdgeInsets.all(20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        "Forgot Password",
-                        style: GoogleFonts.montserrat(
-                            color: Colors.blue, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.all(10),
-                child: Column(
-                  children: [
-                    Text(
-                      "Don't have an account?",
-                      style: GoogleFonts.montserrat(
-                          letterSpacing: 1, color: Colors.white, fontSize: 13),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const RegistrationPage(),
-                          ),
-                        );
-                      },
-                      child: Text(
-                        "Register here!",
-                        style: GoogleFonts.montserrat(
-                            color: Colors.blue, fontWeight: FontWeight.bold),
-                      ),
-                    )
-                  ],
-                ),
-              )
             ],
           ),
         ),
