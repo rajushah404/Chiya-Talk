@@ -18,7 +18,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        toolbarHeight: 70,
+        // toolbarHeight: 70,
         backgroundColor: Colors.black,
         title: Text(
           "Registration Page",

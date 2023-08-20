@@ -1,6 +1,6 @@
-import 'package:chiya_talk/forgot_password.dart';
-import 'package:chiya_talk/home_screen.dart';
-import 'package:chiya_talk/registration_page.dart';
+import 'package:chiya_talk/View/ForgotPasswordPage/forgot_password.dart';
+import 'package:chiya_talk/View/home_screen.dart';
+import 'package:chiya_talk/View/RegisterPage/registration_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -41,7 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               Center(
                 child: Text(
-                  "Welcome Back !",
+                  "Welcome Back !".toUpperCase(),
                   style:
                       GoogleFonts.montserrat(color: Colors.blue, fontSize: 20),
                 ),
@@ -53,13 +53,15 @@ class _LoginScreenState extends State<LoginScreen> {
                   showCursor: false,
                   controller: usernameController,
                   decoration: InputDecoration(
-                    border: const OutlineInputBorder(
-                      borderSide: BorderSide(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      borderSide: const BorderSide(
                         color: Colors.white,
                       ),
                     ),
-                    focusedBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.blue),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Colors.blue),
+                      borderRadius: BorderRadius.circular(15),
                     ),
                     contentPadding: const EdgeInsets.symmetric(
                         vertical: 10.0, horizontal: 10.0),
@@ -92,11 +94,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   controller: passwordController,
                   obscureText: !_passwordVisible,
                   decoration: InputDecoration(
-                      border: const OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        borderSide: const BorderSide(color: Colors.white),
                       ),
-                      focusedBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.blue),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(color: Colors.blue),
+                        borderRadius: BorderRadius.circular(15),
                       ),
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 10.0, horizontal: 10.0),
@@ -155,7 +159,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   textAlign: TextAlign.center,
                 ),
                 onPressed: () async {
-                  Navigator.pop(
+                  Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => const HomeScreen(),

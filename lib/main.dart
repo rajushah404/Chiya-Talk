@@ -1,4 +1,4 @@
-import 'package:chiya_talk/login_page.dart';
+import 'package:chiya_talk/View/LoginPage/login_page.dart';
 
 import 'package:flutter/material.dart';
 

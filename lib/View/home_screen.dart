@@ -12,13 +12,14 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+      ),
       body: Center(
         child: Text(
           "Loading...................",
           style: GoogleFonts.aboreto(
-            fontWeight: FontWeight.bold,
-            fontSize: 25,
-          ),
+              fontWeight: FontWeight.bold, fontSize: 25, color: Colors.blue),
         ),
       ),
     );

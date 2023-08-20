@@ -106,7 +106,7 @@ class _ForgotpasswordState extends State<Forgotpassword> {
                   margin: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                   child: Center(
                     child: Text(
-                      " OTP will be sended to your Email-ID",
+                      " OTP will be sended to your Email-ID".toUpperCase(),
                       style: GoogleFonts.montserrat(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
