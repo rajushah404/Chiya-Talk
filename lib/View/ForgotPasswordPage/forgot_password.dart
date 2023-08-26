@@ -1,3 +1,4 @@
+import 'package:chiya_talk/Basic/color_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -14,13 +15,13 @@ class _ForgotpasswordState extends State<Forgotpassword> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: AppColor.bgColor,
         title: Text(
           "FORGOT PASSWORD",
           style: GoogleFonts.montserrat(
             fontSize: 20,
             fontWeight: FontWeight.w400,
-            color: Colors.blue,
+            color: AppColor.primaryColor,
           ),
         ),
         centerTitle: true,
@@ -42,7 +43,7 @@ class _ForgotpasswordState extends State<Forgotpassword> {
                   child: Center(
                       child: Image.asset(
                     "assets/logo.png",
-                    color: Colors.blue,
+                    color: AppColor.primaryColor,
                     fit: BoxFit.fill,
                     height: 300,
                   )),
@@ -54,7 +55,7 @@ class _ForgotpasswordState extends State<Forgotpassword> {
                       Text(
                         "Verify your username".toUpperCase(),
                         style: GoogleFonts.montserrat(
-                            color: Colors.blue,
+                            color: AppColor.primaryColor,
                             fontSize: 13,
                             fontWeight: FontWeight.bold),
                       ),
@@ -70,11 +71,11 @@ class _ForgotpasswordState extends State<Forgotpassword> {
                     decoration: InputDecoration(
                       border: const OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: Colors.white,
+                          color: AppColor.textFiendFont,
                         ),
                       ),
                       focusedBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.blue),
+                        borderSide: BorderSide(color: AppColor.primaryColor),
                       ),
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 10.0, horizontal: 10.0),
@@ -83,12 +84,12 @@ class _ForgotpasswordState extends State<Forgotpassword> {
                         style: GoogleFonts.montserrat(
                             fontSize: 12,
                             letterSpacing: 1.5,
-                            color: Colors.white),
+                            color: AppColor.textFiendFont),
                       ),
                       prefixIcon: const Icon(
                         Icons.account_circle_outlined,
                         size: 20,
-                        color: Colors.white,
+                        color: AppColor.textFiendFont,
                       ),
                     ),
                     validator: (value) {
@@ -108,7 +109,7 @@ class _ForgotpasswordState extends State<Forgotpassword> {
                     child: Text(
                       " OTP will be sended to your Email-ID".toUpperCase(),
                       style: GoogleFonts.montserrat(
-                        color: Colors.white,
+                        color: AppColor.textFiendFont,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -120,7 +121,7 @@ class _ForgotpasswordState extends State<Forgotpassword> {
                 ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
-                      Colors.blue,
+                      AppColor.primaryColor,
                     ),
                     fixedSize: MaterialStateProperty.all<Size>(
                       const Size(350, 30),
@@ -146,7 +147,7 @@ class _ForgotpasswordState extends State<Forgotpassword> {
                       "It's Your Duty To Remember Your Password !!  ",
                       style: GoogleFonts.aladin(
                           letterSpacing: 1.5,
-                          color: Colors.red,
+                          color: AppColor.warningColor,
                           fontWeight: FontWeight.w700),
                     ),
                   ),
