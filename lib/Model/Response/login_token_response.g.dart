@@ -9,10 +9,11 @@ part of 'login_token_response.dart';
 LoginTokenResponse _$LoginTokenResponseFromJson(Map<String, dynamic> json) =>
     LoginTokenResponse(
       token: json['token'] as String?,
-    )..message = json['message'] as String?;
+      expiration: json['expiration'] as String?,
+    );
 
 Map<String, dynamic> _$LoginTokenResponseToJson(LoginTokenResponse instance) =>
     <String, dynamic>{
       'token': instance.token,
-      'message': instance.message,
+      'expiration': instance.expiration,
     };
