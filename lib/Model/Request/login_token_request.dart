@@ -1,10 +1,10 @@
-class LoginRequest {
+class LoginTokenRequest {
   String? username;
   String? password;
 
-  LoginRequest({this.username, this.password});
+  LoginTokenRequest({this.username, this.password});
 
-  LoginRequest.fromJson(Map<String, dynamic> json) {
+  LoginTokenRequest.fromJson(Map<String, dynamic> json) {
     username = json['username'];
     password = json['password'];
   }
