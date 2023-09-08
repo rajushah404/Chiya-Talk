@@ -1,3 +1,8 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'login_token_request.g.dart';
+
+@JsonSerializable()
 class LoginTokenRequest {
   String? username;
   String? password;
