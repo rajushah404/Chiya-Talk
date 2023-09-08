@@ -1,3 +1,4 @@
+import 'package:chiya_talk/Basic/color_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -21,11 +22,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
         // toolbarHeight: 70,
         backgroundColor: Colors.black,
         title: Text(
-          "Registration Page",
+          "Register Here".toUpperCase(),
           style: GoogleFonts.montserrat(
             fontSize: 20,
             fontWeight: FontWeight.w400,
-            color: Colors.blue,
+            color: AppColor.textFiendFont,
           ),
         ),
         centerTitle: true,
@@ -47,7 +48,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   child: Center(
                       child: Image.asset(
                     "assets/logo.png",
-                    color: Colors.blue,
                     fit: BoxFit.fill,
                     height: 300,
                   )),
@@ -187,7 +187,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
-                      Colors.blue,
+                      AppColor.primaryColor,
                     ),
                     fixedSize: MaterialStateProperty.all<Size>(
                       const Size(350, 30),

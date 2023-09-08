@@ -1,3 +1,4 @@
+import 'package:chiya_talk/Basic/color_collection.dart';
 import 'package:chiya_talk/View/ForgotPasswordPage/forgot_password.dart';
 import 'package:chiya_talk/View/home_screen.dart';
 import 'package:chiya_talk/View/RegisterPage/registration_page.dart';
@@ -28,23 +29,32 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             children: [
               SizedBox(
-                // padding: EdgeInsets.all(10),
-                //margin: const EdgeInsets.all(10),
-                width: double.infinity,
-                child: Center(
-                    child: Image.asset(
-                  "assets/logo.png",
-                  color: Colors.blue,
-                  fit: BoxFit.fill,
-                  height: 300,
-                )),
+                  // padding: EdgeInsets.all(10),
+                  //margin: const EdgeInsets.all(10),
+                  width: double.infinity,
+                  child: Container(
+                    padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
+                    child: Center(
+                        child: Image.asset(
+                      "assets/logo.png",
+                      fit: BoxFit.fill,
+                      height: 250,
+                    )),
+                  )),
+              const SizedBox(
+                height: 20,
               ),
               Center(
                 child: Text(
                   "Welcome Back !".toUpperCase(),
-                  style:
-                      GoogleFonts.montserrat(color: Colors.blue, fontSize: 20),
+                  style: GoogleFonts.montserrat(
+                      color: Colors.white,
+                      fontSize: 22,
+                      fontWeight: FontWeight.w600),
                 ),
+              ),
+              const SizedBox(
+                height: 15,
               ),
               Container(
                 margin: const EdgeInsets.all(20),
@@ -127,7 +137,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ? Icons.visibility
                               : Icons.visibility_off,
                           size: 15,
-                          color: Colors.black,
+                          color: AppColor.textFiendFont,
                         ),
                       )),
                   validator: (value) {
@@ -144,7 +154,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ElevatedButton(
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(
-                    Colors.blue,
+                    AppColor.primaryColor,
                   ),
                   fixedSize: MaterialStateProperty.all<Size>(
                     const Size(278, 30),
@@ -153,9 +163,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Text(
                   "Login",
                   style: GoogleFonts.montserrat(
-                    letterSpacing: 1.3,
-                    color: Colors.white,
-                  ),
+                      letterSpacing: 1.3,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center,
                 ),
                 onPressed: () async {
@@ -184,7 +194,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Text(
                         "Forgot Password",
                         style: GoogleFonts.acme(
-                            color: Colors.blue, fontWeight: FontWeight.bold),
+                            color: AppColor.primaryColor,
+                            fontWeight: FontWeight.bold),
                       ),
                     ),
                   ],
@@ -211,7 +222,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Text(
                         "Register here!",
                         style: GoogleFonts.acme(
-                            color: Colors.blue, fontWeight: FontWeight.bold),
+                            color: AppColor.primaryColor,
+                            fontWeight: FontWeight.bold),
                       ),
                     )
                   ],

@@ -21,7 +21,7 @@ class _ForgotpasswordState extends State<Forgotpassword> {
           style: GoogleFonts.montserrat(
             fontSize: 20,
             fontWeight: FontWeight.w400,
-            color: AppColor.primaryColor,
+            color: AppColor.textFiendFont,
           ),
         ),
         centerTitle: true,
@@ -43,7 +43,6 @@ class _ForgotpasswordState extends State<Forgotpassword> {
                   child: Center(
                       child: Image.asset(
                     "assets/logo.png",
-                    color: AppColor.primaryColor,
                     fit: BoxFit.fill,
                     height: 300,
                   )),
@@ -107,7 +106,7 @@ class _ForgotpasswordState extends State<Forgotpassword> {
                   margin: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                   child: Center(
                     child: Text(
-                      " OTP will be sended to your Email-ID".toUpperCase(),
+                      " OTP will be sent to your Email-ID".toUpperCase(),
                       style: GoogleFonts.montserrat(
                         color: AppColor.textFiendFont,
                         fontWeight: FontWeight.bold,
