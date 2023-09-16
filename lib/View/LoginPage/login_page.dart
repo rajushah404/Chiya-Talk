@@ -27,6 +27,14 @@ class _LoginScreenState extends State<LoginScreen> {
   EncryptedSharedPreferences encryptedSharedPreferences =
       EncryptedSharedPreferences();
 
+  @override
+  void dispose() {
+    usernameController.clear();
+    passwordController.clear();
+    setState(() {});
+    super.dispose();
+  }
+
   // late LoginBloc _loginBloc;
 
   // @override

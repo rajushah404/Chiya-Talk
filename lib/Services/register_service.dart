@@ -26,17 +26,20 @@ class RegisterService {
         },
         body: jsonEncode(registerRequest.toJson()),
       );
-
-      if (response.statusCode == 200) {
+      if (response.body.isNotEmpty) {
         final Map<String, dynamic> responseData = json.decode(response.body);
         final RegisterResponse registerResponse =
             RegisterResponse.fromJson(responseData);
-        return registerResponse;
+        if (response.statusCode == 200) {
+          return registerResponse;
+        } else {
+          return registerResponse;
+        }
       } else {
-        throw Exception('Register Failed');
+        throw Exception('Failed to Register');
       }
     } catch (e) {
-      throw Exception('Failed to connect to the server');
+      throw Exception('Failed to Register');
     }
   }
 }
