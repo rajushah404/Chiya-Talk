@@ -1,6 +1,11 @@
 import 'package:chiya_talk/Basic/color_collection.dart';
+import 'package:chiya_talk/Model/Response/register_response.dart';
+import 'package:chiya_talk/Services/register_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../LoginPage/login_page.dart';
 
 class RegistrationPage extends StatefulWidget {
   const RegistrationPage({super.key});
@@ -201,7 +206,30 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
                   ),
-                  onPressed: () async {},
+                  onPressed: () async {
+                    try {
+                      final RegisterResponse registerResponse =
+                          await RegisterService.register(
+                        usernameController.text,
+                        passwordController.text,
+                        emailController.text,
+                      );
+                      if (registerResponse.status == "Success") {
+                        EasyLoading.showSuccess("Register Sucessfull");
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const LoginScreen(),
+                          ),
+                        );
+                      } else {
+                        EasyLoading.showError(
+                            "Registration Failed, Please try again !!");
+                      }
+                    } catch (e) {
+                      return EasyLoading.showError("$e");
+                    }
+                  },
                 ),
               ],
             ),

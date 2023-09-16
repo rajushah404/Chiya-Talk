@@ -23,20 +23,22 @@ class AuthService {
         },
         body: jsonEncode(loginRequest.toJson()),
       );
-
-      if (response.statusCode == 200) {
-        // If the request is successful, parse and return the response as a LoginTokenResponse
+      if (response.body.isNotEmpty) {
         final Map<String, dynamic> responseData = json.decode(response.body);
         final LoginTokenResponse loginResponse =
             LoginTokenResponse.fromJson(responseData);
-        return loginResponse;
+
+        if (loginResponse.status == "000" &&
+            loginResponse.isDataNull() == false) {
+          return loginResponse;
+        } else {
+          return loginResponse;
+        }
       } else {
-        // If the request is not successful, handle the error here (e.g., show an error message)
-        throw Exception('Failed to login');
+        throw Exception("User can not be Empty");
       }
     } catch (e) {
-      // Handle any exceptions that occur during the request (e.g., network issues)
-      throw Exception('Failed to connect to the server');
+      throw Exception('Failed to Login');
     }
   }
 }

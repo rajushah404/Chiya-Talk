@@ -20,6 +20,10 @@ class LoginTokenResponse {
     }
     return data;
   }
+
+  bool isDataNull() {
+    return data == null;
+  }
 }
 
 class Data {

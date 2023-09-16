@@ -1,7 +1,5 @@
 import 'package:chiya_talk/Basic/color_collection.dart';
-import 'package:chiya_talk/Model/Request/login_token_request.dart';
 import 'package:chiya_talk/Model/Response/login_token_response.dart';
-import 'package:chiya_talk/View/ForgotPasswordPage/forgot_password.dart';
 import 'package:chiya_talk/View/home_screen.dart';
 import 'package:chiya_talk/View/RegisterPage/registration_page.dart';
 import 'package:encrypted_shared_preferences/encrypted_shared_preferences.dart';
@@ -26,17 +24,16 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _passwordVisible = false;
   DateTime currentBackPressTime = DateTime.now();
 
-  // LoginService loginService = LoginService();
   EncryptedSharedPreferences encryptedSharedPreferences =
       EncryptedSharedPreferences();
 
   // late LoginBloc _loginBloc;
 
-  @override
-  void initState() {
-    // _loginBloc = LoginBloc(loginService);
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //    _loginBloc = LoginBloc(loginService);
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -183,17 +180,26 @@ class _LoginScreenState extends State<LoginScreen> {
                       final LoginTokenResponse response =
                           await AuthService.login(
                               usernameController.text, passwordController.text);
-                      EasyLoading.showSuccess("Logging Sucessfull");
-                      if (response.data!.token!.isNotEmpty) {
+
+                      if (response.status == "000") {
+                        EasyLoading.showSuccess("Logging Sucessfull");
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => const HomeScreen(),
                           ),
                         );
+                      } else {
+                        EasyLoading.showError("Credientials not match !!");
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const LoginScreen(),
+                          ),
+                        );
                       }
                     } catch (e) {
-                      return EasyLoading.showError("Credientials not match !!");
+                      return EasyLoading.showError("$e");
                     }
                   },
                 ),
@@ -204,12 +210,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       TextButton(
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const Forgotpassword(),
-                            ),
-                          );
+                          EasyLoading.showInfo("Feature Under construction");
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //     builder: (context) => const Forgotpassword(),
+                          //   ),
+                          // );
                         },
                         child: Text(
                           "Forgot Password",
