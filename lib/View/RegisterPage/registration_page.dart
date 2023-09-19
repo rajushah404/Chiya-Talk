@@ -178,12 +178,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             color: Colors.white,
                           ),
                         )),
-                    validator: (value) {
-                      if (value == "") {
-                        return "Password Required";
-                      }
-                      return null;
-                    },
                   ),
                 ),
                 const SizedBox(

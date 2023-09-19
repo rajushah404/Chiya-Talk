@@ -31,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void dispose() {
     usernameController.clear();
     passwordController.clear();
-    setState(() {});
+
     super.dispose();
   }
 

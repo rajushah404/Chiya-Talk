@@ -1,4 +1,5 @@
 import 'package:chiya_talk/Basic/color_collection.dart';
+import 'package:chiya_talk/View/LoginPage/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -39,11 +40,12 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           IconButton(
             icon: const Icon(
-              Icons.more_vert,
+              Icons.logout_outlined,
               color: AppColor.bgColor,
             ),
             onPressed: () {
-              // do something
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => const LoginScreen()));
             },
           )
         ],
