@@ -5,4 +5,5 @@ mixin AppColor {
   static const Color primaryColor = Color(0xFFff9e1c);
   static const Color warningColor = Colors.red;
   static const Color textFiendFont = Colors.white;
+  static const Color popColor = Colors.blue;
 }

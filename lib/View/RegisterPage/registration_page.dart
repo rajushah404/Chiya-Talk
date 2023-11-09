@@ -22,7 +22,15 @@ class _RegistrationPageState extends State<RegistrationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColor.bgColor,
       appBar: AppBar(
+        leading: IconButton(
+            onPressed: () => Navigator.of(context).pop(),
+            icon: const Icon(
+              Icons.arrow_back_ios,
+              size: 25,
+              color: AppColor.primaryColor,
+            )),
         elevation: 0,
         // toolbarHeight: 70,
         backgroundColor: Colors.black,
@@ -36,197 +44,194 @@ class _RegistrationPageState extends State<RegistrationPage> {
         ),
         centerTitle: true,
       ),
-      body: Scaffold(
-        backgroundColor: Colors.black,
-        body: GestureDetector(
-          onTap: () {
-            FocusScope.of(context).requestFocus(FocusNode());
-          },
-          child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: Column(
-              children: [
-                SizedBox(
-                  // padding: EdgeInsets.all(10),
-                  //margin: const EdgeInsets.all(10),
-                  width: double.infinity,
-                  child: Center(
-                      child: Image.asset(
-                    "assets/logo.png",
-                    fit: BoxFit.fill,
-                    height: 300,
-                  )),
-                ),
-                Container(
-                  margin: const EdgeInsets.all(15),
-                  child: TextFormField(
-                    style: const TextStyle(color: Colors.white),
-                    showCursor: false,
-                    controller: emailController,
-                    decoration: InputDecoration(
-                      border: const OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.white,
-                        ),
-                      ),
-                      focusedBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.blue),
-                      ),
-                      contentPadding: const EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 10.0),
-                      label: Text(
-                        "Email",
-                        style: GoogleFonts.montserrat(
-                            fontSize: 12,
-                            letterSpacing: 1.5,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      prefixIcon: const Icon(
-                        Icons.email_outlined,
-                        size: 20,
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).requestFocus(FocusNode());
+        },
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Column(
+            children: [
+              SizedBox(
+                // padding: EdgeInsets.all(10),
+                //margin: const EdgeInsets.all(10),
+                width: double.infinity,
+                child: Center(
+                    child: Image.asset(
+                  "assets/logo.png",
+                  fit: BoxFit.fill,
+                  height: 300,
+                )),
+              ),
+              Container(
+                margin: const EdgeInsets.all(15),
+                child: TextFormField(
+                  style: const TextStyle(color: Colors.white),
+                  showCursor: false,
+                  controller: emailController,
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(
+                      borderSide: BorderSide(
                         color: Colors.white,
                       ),
                     ),
-                    validator: (value) {
-                      if (value == "") {
-                        return "Email is required";
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.all(15),
-                  child: TextFormField(
-                    style: const TextStyle(color: Colors.white),
-                    showCursor: false,
-                    controller: usernameController,
-                    decoration: InputDecoration(
-                      border: const OutlineInputBorder(
-                        borderSide: BorderSide(
+                    focusedBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.blue),
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 10.0, horizontal: 10.0),
+                    label: Text(
+                      "Email",
+                      style: GoogleFonts.montserrat(
+                          fontSize: 12,
+                          letterSpacing: 1.5,
                           color: Colors.white,
-                        ),
-                      ),
-                      focusedBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.blue),
-                      ),
-                      contentPadding: const EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 10.0),
-                      label: Text(
-                        "Username",
-                        style: GoogleFonts.montserrat(
-                            fontSize: 12,
-                            letterSpacing: 1.5,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      prefixIcon: const Icon(
-                        Icons.account_circle_outlined,
-                        size: 20,
-                        color: Colors.white,
-                      ),
+                          fontWeight: FontWeight.bold),
                     ),
-                    validator: (value) {
-                      if (value == "") {
-                        return "Username Required";
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.all(15),
-                  child: TextFormField(
-                    style: const TextStyle(color: Colors.white),
-                    showCursor: false,
-                    controller: passwordController,
-                    obscureText: !_passwordVisible,
-                    decoration: InputDecoration(
-                        border: const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                        ),
-                        focusedBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.blue),
-                        ),
-                        contentPadding: const EdgeInsets.symmetric(
-                            vertical: 10.0, horizontal: 10.0),
-                        label: Text(
-                          "Password",
-                          style: GoogleFonts.montserrat(
-                              fontSize: 12,
-                              letterSpacing: 1.5,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        prefixIcon: const Icon(
-                          Icons.lock_open_outlined,
-                          size: 20,
-                          color: Colors.white,
-                        ),
-                        suffixIcon: IconButton(
-                          onPressed: () {
-                            setState(() {
-                              _passwordVisible = !_passwordVisible;
-                            });
-                          },
-                          icon: Icon(
-                            _passwordVisible
-                                ? Icons.visibility
-                                : Icons.visibility_off,
-                            size: 15,
-                            color: Colors.white,
-                          ),
-                        )),
-                  ),
-                ),
-                const SizedBox(
-                  height: 25,
-                ),
-                ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                      AppColor.primaryColor,
-                    ),
-                    fixedSize: MaterialStateProperty.all<Size>(
-                      const Size(350, 30),
+                    prefixIcon: const Icon(
+                      Icons.email_outlined,
+                      size: 20,
+                      color: Colors.white,
                     ),
                   ),
-                  child: Text(
-                    "Register",
-                    style: GoogleFonts.montserrat(
-                        letterSpacing: 1.3,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.center,
-                  ),
-                  onPressed: () async {
-                    try {
-                      final RegisterResponse registerResponse =
-                          await RegisterService.register(
-                        usernameController.text,
-                        passwordController.text,
-                        emailController.text,
-                      );
-                      if (registerResponse.status == "Success") {
-                        EasyLoading.showSuccess("Register Sucessfull");
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const LoginScreen(),
-                          ),
-                        );
-                      } else {
-                        EasyLoading.showError(
-                            "Registration Failed, Please try again !!");
-                      }
-                    } catch (e) {
-                      return EasyLoading.showError("$e");
+                  validator: (value) {
+                    if (value == "") {
+                      return "Email is required";
                     }
+                    return null;
                   },
                 ),
-              ],
-            ),
+              ),
+              Container(
+                margin: const EdgeInsets.all(15),
+                child: TextFormField(
+                  style: const TextStyle(color: Colors.white),
+                  showCursor: false,
+                  controller: usernameController,
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.white,
+                      ),
+                    ),
+                    focusedBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.blue),
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 10.0, horizontal: 10.0),
+                    label: Text(
+                      "Username",
+                      style: GoogleFonts.montserrat(
+                          fontSize: 12,
+                          letterSpacing: 1.5,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    prefixIcon: const Icon(
+                      Icons.account_circle_outlined,
+                      size: 20,
+                      color: Colors.white,
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value == "") {
+                      return "Username Required";
+                    }
+                    return null;
+                  },
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.all(15),
+                child: TextFormField(
+                  style: const TextStyle(color: Colors.white),
+                  showCursor: false,
+                  controller: passwordController,
+                  obscureText: !_passwordVisible,
+                  decoration: InputDecoration(
+                      border: const OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                      ),
+                      focusedBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.blue),
+                      ),
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 10.0),
+                      label: Text(
+                        "Password",
+                        style: GoogleFonts.montserrat(
+                            fontSize: 12,
+                            letterSpacing: 1.5,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      prefixIcon: const Icon(
+                        Icons.lock_open_outlined,
+                        size: 20,
+                        color: Colors.white,
+                      ),
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            _passwordVisible = !_passwordVisible;
+                          });
+                        },
+                        icon: Icon(
+                          _passwordVisible
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                          size: 15,
+                          color: Colors.white,
+                        ),
+                      )),
+                ),
+              ),
+              const SizedBox(
+                height: 25,
+              ),
+              ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                    AppColor.primaryColor,
+                  ),
+                  fixedSize: MaterialStateProperty.all<Size>(
+                    const Size(350, 30),
+                  ),
+                ),
+                child: Text(
+                  "Register",
+                  style: GoogleFonts.montserrat(
+                      letterSpacing: 1.3,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
+                onPressed: () async {
+                  try {
+                    final RegisterResponse registerResponse =
+                        await RegisterService.register(
+                      usernameController.text,
+                      passwordController.text,
+                      emailController.text,
+                    );
+                    if (registerResponse.status == "Success") {
+                      EasyLoading.showSuccess("Register Sucessfull");
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const LoginScreen(),
+                        ),
+                      );
+                    } else {
+                      EasyLoading.showError(
+                          "Registration Failed, Please try again !!");
+                    }
+                  } catch (e) {
+                    return EasyLoading.showError("$e");
+                  }
+                },
+              ),
+            ],
           ),
         ),
       ),
