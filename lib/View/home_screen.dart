@@ -14,8 +14,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.bgColor,
+      backgroundColor: AppColor.textFiendFont,
       appBar: AppBar(
+        centerTitle: true,
         toolbarHeight: 50,
         automaticallyImplyLeading: false,
         backgroundColor: AppColor.primaryColor,
@@ -50,13 +51,30 @@ class _HomeScreenState extends State<HomeScreen> {
           )
         ],
       ),
-      body: Center(
-        child: Text(
-          "Loading...................",
-          style: GoogleFonts.aboreto(
-              fontWeight: FontWeight.bold, fontSize: 25, color: Colors.blue),
-        ),
+      body: const Column(
+        children: [],
       ),
+      bottomNavigationBar: BottomAppBar(
+          color: AppColor.primaryColor,
+          surfaceTintColor: AppColor.warningColor,
+          height: 60,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              TextButton(
+                onPressed: () {},
+                child: const Text("Chat"),
+              ),
+              TextButton(
+                onPressed: () {},
+                child: const Text("Updates"),
+              ),
+              TextButton(
+                onPressed: () {},
+                child: const Text("Calls"),
+              )
+            ],
+          )),
     );
   }
 }

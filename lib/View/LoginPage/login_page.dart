@@ -1,12 +1,14 @@
 import 'package:chiya_talk/Basic/color_collection.dart';
 import 'package:chiya_talk/View/ProfileInfo/profile_info.dart';
 import 'package:chiya_talk/View/RegisterPage/registration_page.dart';
+import 'package:chiya_talk/View/home_screen.dart';
 import 'package:encrypted_shared_preferences/encrypted_shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../Services/login_service.dart';
+import '../ForgotPasswordPage/forgot_password.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({
@@ -248,7 +250,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const ProfileInfo(),
+                                  builder: (context) => const HomeScreen(),
                                 ),
                               );
                             } else {
@@ -271,13 +273,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       children: [
                         TextButton(
                           onPressed: () {
-                            EasyLoading.showInfo("Feature Under construction");
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //     builder: (context) => const Forgotpassword(),
-                            //   ),
-                            // );
+                            // EasyLoading.showInfo("Feature Under construction");
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const Forgotpassword(),
+                              ),
+                            );
                           },
                           child: Text(
                             "Forgot Password",
