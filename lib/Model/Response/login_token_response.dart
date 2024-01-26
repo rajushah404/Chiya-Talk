@@ -1,46 +1,21 @@
 class LoginTokenResponse {
-  String? status;
+  String? token;
+  String? statusCode;
   String? message;
-  Data? data;
 
-  LoginTokenResponse({this.status, this.message, this.data});
+  LoginTokenResponse({this.token, this.statusCode, this.message});
 
   LoginTokenResponse.fromJson(Map<String, dynamic> json) {
-    status = json['status'];
-    message = json['message'];
-    data = json['data'] != null ? Data.fromJson(json['data']) : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['status'] = status;
-    data['message'] = message;
-    if (this.data != null) {
-      data['data'] = this.data!.toJson();
-    }
-    return data;
-  }
-
-  bool isDataNull() {
-    return data == null;
-  }
-}
-
-class Data {
-  String? userId;
-  String? token;
-
-  Data({this.userId, this.token});
-
-  Data.fromJson(Map<String, dynamic> json) {
-    userId = json['userId'];
     token = json['token'];
+    statusCode = json['statusCode'];
+    message = json['message'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['userId'] = userId;
     data['token'] = token;
+    data['statusCode'] = statusCode;
+    data['message'] = message;
     return data;
   }
 }

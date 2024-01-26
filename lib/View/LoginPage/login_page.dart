@@ -1,7 +1,5 @@
 import 'package:chiya_talk/Basic/color_collection.dart';
-import 'package:chiya_talk/View/ProfileInfo/profile_info.dart';
 import 'package:chiya_talk/View/RegisterPage/registration_page.dart';
-import 'package:chiya_talk/View/home_screen.dart';
 import 'package:encrypted_shared_preferences/encrypted_shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,6 +7,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../Services/login_service.dart';
 import '../ForgotPasswordPage/forgot_password.dart';
+import '../ProfileInfo/profile_info.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({
@@ -55,7 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
         if (cantExit) {
           var snack = SnackBar(
             content: const Text(
-              "Do you to exit the app !!",
+              "Press back key twice to exit the app !!",
               style: TextStyle(
                 letterSpacing: 1.0,
                 color: AppColor.warningColor,
@@ -245,12 +244,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           Future.delayed(const Duration(seconds: 2), () {
                             Navigator.pop(context);
 
-                            if (response.status == "000") {
-                              // EasyLoading.showSuccess("Logging Successful");
+                            if (response.statusCode == "000") {
+                              print(response.token);
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const HomeScreen(),
+                                  builder: (context) => const ProfileInfo(),
                                 ),
                               );
                             } else {
