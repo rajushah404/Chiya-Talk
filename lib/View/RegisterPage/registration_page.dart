@@ -17,7 +17,7 @@ class RegistrationPage extends StatefulWidget {
 class _RegistrationPageState extends State<RegistrationPage> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
   bool _passwordVisible = false;
   @override
   Widget build(BuildContext context) {
@@ -68,7 +68,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 child: TextFormField(
                   style: const TextStyle(color: Colors.white),
                   showCursor: false,
-                  controller: emailController,
+                  controller: nameController,
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(
                       borderSide: BorderSide(
@@ -81,7 +81,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     contentPadding: const EdgeInsets.symmetric(
                         vertical: 10.0, horizontal: 10.0),
                     label: Text(
-                      "Email",
+                      "Name",
                       style: GoogleFonts.montserrat(
                           fontSize: 12,
                           letterSpacing: 1.5,
@@ -96,7 +96,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   ),
                   validator: (value) {
                     if (value == "") {
-                      return "Email is required";
+                      return "Name is required";
                     }
                     return null;
                   },
@@ -212,16 +212,24 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         await RegisterService.register(
                       usernameController.text,
                       passwordController.text,
-                      emailController.text,
+                      nameController.text,
                     );
-                    if (registerResponse.status == "Success") {
-                      EasyLoading.showSuccess("Register Sucessfull");
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const LoginScreen(),
-                        ),
-                      );
+                    if (registerResponse.message!.isNotEmpty) {
+                      if (registerResponse.message ==
+                          "Username Already exists") {
+                        EasyLoading.showInfo(
+                            registerResponse.message.toString());
+                        return;
+                      } else {
+                        EasyLoading.showSuccess(
+                            registerResponse.message.toString());
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const LoginScreen(),
+                          ),
+                        );
+                      }
                     } else {
                       EasyLoading.showError(
                           "Registration Failed, Please try again !!");

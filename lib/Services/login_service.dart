@@ -6,14 +6,15 @@ import '../Model/Request/login_token_request.dart';
 import '../Model/Response/login_token_response.dart';
 
 class AuthService {
-  static const String loginEndpoint = "/api/Login/Login";
+  static const String loginEndpoint = "api/Login/Login";
 
   static Future<LoginTokenResponse> login(
       String username, String password) async {
     final url = Uri.parse(BaseUrl.uri + loginEndpoint);
 
     // Create a LoginTokenRequest object
-    final loginRequest = LoginTokenRequest(username, password);
+    final loginRequest =
+        LoginTokenRequest(username: username, password: password);
 
     try {
       final response = await http.post(
@@ -29,7 +30,9 @@ class AuthService {
             LoginTokenResponse.fromJson(responseData);
 
         if (loginResponse.statusCode == "000" &&
-            loginResponse.token!.isNotEmpty) {
+            loginResponse.tokenInfo!.token!.isNotEmpty) {
+          return loginResponse;
+        } else if (loginResponse.statusCode == "002") {
           return loginResponse;
         } else {
           return loginResponse;

@@ -1,9 +1,9 @@
-class RegisterResponse {
+class MeaasgeResponse {
   String? message;
 
-  RegisterResponse({this.message});
+  MeaasgeResponse({this.message});
 
-  RegisterResponse.fromJson(Map<String, dynamic> json) {
+  MeaasgeResponse.fromJson(Map<String, dynamic> json) {
     message = json['message'];
   }
 

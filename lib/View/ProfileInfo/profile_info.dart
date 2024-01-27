@@ -1,19 +1,27 @@
+import 'package:chiya_talk/View/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../Basic/color_collection.dart';
+import '../../Model/Response/message_response.dart';
+import '../../Services/update_profile_servide.dart';
 
 class ProfileInfo extends StatefulWidget {
-  const ProfileInfo({Key? key}) : super(key: key);
+  final String token;
+  final String username;
+  const ProfileInfo({Key? key, required this.token, required this.username})
+      : super(key: key);
 
   @override
   State<ProfileInfo> createState() => _ProfileInfoState();
 }
 
 class _ProfileInfoState extends State<ProfileInfo> {
-  TextEditingController firstNameController = TextEditingController();
-  TextEditingController lastNameController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
   TextEditingController contactController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+
   String? profileImageUrl;
 
   @override
@@ -61,7 +69,7 @@ class _ProfileInfoState extends State<ProfileInfo> {
                   child: TextFormField(
                     style: const TextStyle(color: Colors.white),
                     showCursor: false,
-                    controller: firstNameController,
+                    controller: emailController,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                           borderSide: const BorderSide(
@@ -74,7 +82,7 @@ class _ProfileInfoState extends State<ProfileInfo> {
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 10.0, horizontal: 10.0),
                       label: Text(
-                        "First Name",
+                        "Email",
                         style: GoogleFonts.montserrat(
                             fontSize: 12,
                             letterSpacing: 1.5,
@@ -100,7 +108,7 @@ class _ProfileInfoState extends State<ProfileInfo> {
                   child: TextFormField(
                     style: const TextStyle(color: Colors.white),
                     showCursor: false,
-                    controller: lastNameController,
+                    controller: addressController,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                           borderSide: const BorderSide(
@@ -113,7 +121,7 @@ class _ProfileInfoState extends State<ProfileInfo> {
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 10.0, horizontal: 10.0),
                       label: Text(
-                        "Last Name",
+                        "Address",
                         style: GoogleFonts.montserrat(
                             fontSize: 12,
                             letterSpacing: 1.5,
@@ -192,7 +200,29 @@ class _ProfileInfoState extends State<ProfileInfo> {
                     ),
                     textAlign: TextAlign.center,
                   ),
-                  onPressed: () {},
+                  onPressed: () async {
+                    try {
+                      final MeaasgeResponse response =
+                          await UpdateProfileSerice.update(
+                              widget.username,
+                              emailController.text,
+                              addressController.text,
+                              contactController.text,
+                              "",
+                              widget.token);
+
+                      if (response.message!.isNotEmpty) {
+                        EasyLoading.showToast(response.message.toString());
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const HomeScreen()),
+                        );
+                      }
+                    } catch (e) {
+                      return EasyLoading.showError("$e");
+                    }
+                  },
                 ),
               ],
             ),
@@ -202,7 +232,5 @@ class _ProfileInfoState extends State<ProfileInfo> {
     );
   }
 
-  void _pickProfileImage() {
-    // Implement image picker logic here and update profileImageUrl
-  }
+  void _pickProfileImage() {}
 }

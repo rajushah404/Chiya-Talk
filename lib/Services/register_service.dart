@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import '../Basic/base_url.dart';
 
 class RegisterService {
-  static const String loginEndpoint = "api/Authenticate/register";
+  static const String loginEndpoint = "api/User/SaveUser";
 
   static Future<RegisterResponse> register(
     String username,
@@ -16,7 +16,7 @@ class RegisterService {
     final url = Uri.parse(BaseUrl.uri + loginEndpoint);
 
     final registerRequest =
-        RegisterRequest(username: username, password: password, email: email);
+        RegisterRequest(username: username, password: password, name: email);
 
     try {
       final response = await http.post(

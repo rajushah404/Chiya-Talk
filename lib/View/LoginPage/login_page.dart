@@ -1,5 +1,6 @@
 import 'package:chiya_talk/Basic/color_collection.dart';
 import 'package:chiya_talk/View/RegisterPage/registration_page.dart';
+import 'package:chiya_talk/View/home_screen.dart';
 import 'package:encrypted_shared_preferences/encrypted_shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -245,15 +246,28 @@ class _LoginScreenState extends State<LoginScreen> {
                             Navigator.pop(context);
 
                             if (response.statusCode == "000") {
-                              print(response.token);
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const ProfileInfo(),
-                                ),
-                              );
+                              if (response.tokenInfo!.status == 0) {
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ProfileInfo(
+                                      username: response.tokenInfo!.username
+                                          .toString(),
+                                      token:
+                                          response.tokenInfo!.token.toString(),
+                                    ),
+                                  ),
+                                );
+                              } else if (response.tokenInfo!.status == 1) {
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const HomeScreen()));
+                              }
                             } else {
-                              EasyLoading.showError("Credentials not match !!");
+                              EasyLoading.showError(
+                                  response.message.toString());
                             }
                           });
                         }).catchError((e) {
