@@ -1,7 +1,11 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:chiya_talk/View/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../Basic/color_collection.dart';
 import '../../Model/Response/message_response.dart';
@@ -23,6 +27,9 @@ class _ProfileInfoState extends State<ProfileInfo> {
   TextEditingController emailController = TextEditingController();
 
   String? profileImageUrl;
+  File? _pickedImage;
+  String? base64Image;
+  String? imageName;
 
   @override
   Widget build(BuildContext context) {
@@ -54,10 +61,12 @@ class _ProfileInfoState extends State<ProfileInfo> {
                   onTap: _pickProfileImage,
                   child: CircleAvatar(
                     radius: 90,
-                    backgroundImage: profileImageUrl != null
-                        ? NetworkImage(profileImageUrl!)
-                        : null,
-                    child: profileImageUrl == null
+                    backgroundImage: _pickedImage != null
+                        ? FileImage(_pickedImage!) as ImageProvider<Object>?
+                        : profileImageUrl != null
+                            ? NetworkImage(profileImageUrl!)
+                            : null,
+                    child: _pickedImage == null && profileImageUrl == null
                         ? const Icon(Icons.camera_alt,
                             size: 90, color: Colors.grey)
                         : null,
@@ -202,6 +211,13 @@ class _ProfileInfoState extends State<ProfileInfo> {
                   ),
                   onPressed: () async {
                     try {
+                      if (_pickedImage != null) {
+                        List<int> imageBytes =
+                            await _pickedImage!.readAsBytes();
+                        base64Image = base64Encode(imageBytes);
+                        imageName = _pickedImage!.path.split('/').last;
+                      }
+
                       final MeaasgeResponse response =
                           await UpdateProfileSerice.update(
                               widget.username,
@@ -209,14 +225,19 @@ class _ProfileInfoState extends State<ProfileInfo> {
                               addressController.text,
                               contactController.text,
                               "",
-                              widget.token);
+                              widget.token,
+                              imageName.toString(),
+                              base64Image.toString());
 
                       if (response.message!.isNotEmpty) {
                         EasyLoading.showToast(response.message.toString());
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const HomeScreen()),
+                            builder: (context) => HomeScreen(
+                              profileImageUrl: profileImageUrl,
+                            ),
+                          ),
                         );
                       }
                     } catch (e) {
@@ -232,5 +253,15 @@ class _ProfileInfoState extends State<ProfileInfo> {
     );
   }
 
-  void _pickProfileImage() {}
+  void _pickProfileImage() async {
+    final picker = ImagePicker();
+    final pickedImage = await picker.pickImage(source: ImageSource.camera);
+
+    if (pickedImage != null) {
+      setState(() {
+        _pickedImage = File(pickedImage.path);
+        profileImageUrl = null;
+      });
+    }
+  }
 }

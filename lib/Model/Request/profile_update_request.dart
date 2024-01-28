@@ -4,9 +4,17 @@ class UpdateProfile {
   String? address;
   String? contachNo;
   String? image;
+  String? imageName;
+  String? baseImageFile;
 
   UpdateProfile(
-      {this.username, this.email, this.address, this.contachNo, this.image});
+      {this.username,
+      this.email,
+      this.address,
+      this.contachNo,
+      this.image,
+      this.imageName,
+      this.baseImageFile});
 
   UpdateProfile.fromJson(Map<String, dynamic> json) {
     username = json['username'];
@@ -14,6 +22,8 @@ class UpdateProfile {
     address = json['address'];
     contachNo = json['contachNo'];
     image = json['image'];
+    imageName = json['imageName'];
+    baseImageFile = json['baseImageFile'];
   }
 
   Map<String, dynamic> toJson() {
@@ -23,6 +33,8 @@ class UpdateProfile {
     data['address'] = address;
     data['contachNo'] = contachNo;
     data['image'] = image;
+    data['imageName'] = imageName;
+    data['baseImageFile'] = baseImageFile;
     return data;
   }
 }

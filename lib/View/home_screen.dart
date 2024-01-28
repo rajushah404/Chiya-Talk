@@ -1,16 +1,28 @@
+import 'dart:io';
+
 import 'package:chiya_talk/Basic/color_collection.dart';
 import 'package:chiya_talk/View/LoginPage/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final String? profileImageUrl;
+
+  const HomeScreen({super.key, this.profileImageUrl});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  String? profileImageUrl;
+
+  @override
+  void initState() {
+    super.initState();
+    profileImageUrl = widget.profileImageUrl;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,14 +32,35 @@ class _HomeScreenState extends State<HomeScreen> {
         toolbarHeight: 50,
         automaticallyImplyLeading: false,
         backgroundColor: AppColor.primaryColor,
-        title: Text(
-          "ChiyaTalk",
-          style: GoogleFonts.montserrat(
-            letterSpacing: 1.5,
-            fontSize: 20,
-            fontWeight: FontWeight.w600,
-            color: AppColor.bgColor,
-          ),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CircleAvatar(
+              radius: 16,
+              backgroundImage: profileImageUrl != null
+                  ? FileImage(File(profileImageUrl!))
+                  : null,
+              backgroundColor: Colors.transparent,
+              child: profileImageUrl != null
+                  ? ClipOval(
+                      child: Image(
+                        image: FileImage(File(profileImageUrl!)),
+                        fit: BoxFit.fill,
+                      ),
+                    )
+                  : null,
+            ),
+            const SizedBox(width: 8),
+            Text(
+              "ChiyaTalk",
+              style: GoogleFonts.montserrat(
+                letterSpacing: 1.5,
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+                color: AppColor.bgColor,
+              ),
+            ),
+          ],
         ),
         actions: [
           IconButton(
@@ -35,9 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Icons.search,
               color: AppColor.bgColor,
             ),
-            onPressed: () {
-              // do something
-            },
+            onPressed: () {},
           ),
           IconButton(
             icon: const Icon(
@@ -51,8 +82,26 @@ class _HomeScreenState extends State<HomeScreen> {
           )
         ],
       ),
-      body: const Column(
-        children: [],
+      body: Column(
+        children: [
+          Center(
+            child: CircleAvatar(
+              radius: 50,
+              backgroundImage: profileImageUrl != null
+                  ? FileImage(File(profileImageUrl!))
+                  : null,
+              backgroundColor: Colors.transparent,
+              child: profileImageUrl != null
+                  ? ClipOval(
+                      child: Image(
+                        image: FileImage(File(profileImageUrl!)),
+                        fit: BoxFit.fill,
+                      ),
+                    )
+                  : null,
+            ),
+          ),
+        ],
       ),
       bottomNavigationBar: BottomAppBar(
           color: AppColor.primaryColor,

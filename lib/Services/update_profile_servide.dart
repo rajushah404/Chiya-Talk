@@ -8,8 +8,15 @@ import '../Model/Response/message_response.dart';
 class UpdateProfileSerice {
   static const String loginEndpoint = "api/User/CompleteProfile";
 
-  static Future<MeaasgeResponse> update(String username, String email,
-      String address, String contachNo, String image, String token) async {
+  static Future<MeaasgeResponse> update(
+      String username,
+      String email,
+      String address,
+      String contachNo,
+      String image,
+      String token,
+      String imageName,
+      String baseImageFile) async {
     final url = Uri.parse(BaseUrl.uri + loginEndpoint);
 
     final updateProfile = UpdateProfile(
@@ -17,7 +24,9 @@ class UpdateProfileSerice {
         email: email,
         address: address,
         contachNo: contachNo,
-        image: image);
+        image: image,
+        imageName: imageName,
+        baseImageFile: baseImageFile);
     try {
       final response = await http.post(
         url,

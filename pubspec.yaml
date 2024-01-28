@@ -47,6 +47,8 @@ dependencies:
   encrypted_shared_preferences: ^3.0.1
   flutter_easyloading: ^3.0.5
   http: ^0.13.6
+  image_picker: ^1.0.7
+  file_picker: ^6.1.1
 
 dev_dependencies:
   flutter_test:
