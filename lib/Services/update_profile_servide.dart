@@ -32,7 +32,7 @@ class UpdateProfileSerice {
         url,
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer $token',
+          'Authorization': token,
         },
         body: jsonEncode(updateProfile.toJson()),
       );

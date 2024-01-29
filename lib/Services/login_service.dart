@@ -12,7 +12,6 @@ class AuthService {
       String username, String password) async {
     final url = Uri.parse(BaseUrl.uri + loginEndpoint);
 
-    // Create a LoginTokenRequest object
     final loginRequest =
         LoginTokenRequest(username: username, password: password);
 

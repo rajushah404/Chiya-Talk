@@ -262,8 +262,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                 Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) =>
-                                            const HomeScreen()));
+                                        builder: (context) => HomeScreen(
+                                              username: response
+                                                  .tokenInfo!.username
+                                                  .toString(),
+                                              token: response.tokenInfo!.token
+                                                  .toString(),
+                                            )));
                               }
                             } else {
                               EasyLoading.showError(

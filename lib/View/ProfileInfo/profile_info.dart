@@ -236,6 +236,7 @@ class _ProfileInfoState extends State<ProfileInfo> {
                           MaterialPageRoute(
                             builder: (context) => HomeScreen(
                               profileImageUrl: profileImageUrl,
+                              username: widget.username,
                             ),
                           ),
                         );
