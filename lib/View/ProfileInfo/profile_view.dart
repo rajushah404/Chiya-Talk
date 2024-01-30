@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:chiya_talk/Basic/color_collection.dart';
 import '../../Model/Response/get_user_by_name_response.dart';
@@ -41,11 +41,11 @@ class _ProfileViewState extends State<ProfileView> {
       );
 
       final userDetailsMap = {
-        'Name': userDetails.data!.name.toString().toUpperCase(),
-        'Username': userDetails.data!.username.toString(),
-        'Contact': userDetails.data!.contachNo.toString(),
-        'Email': userDetails.data!.email.toString(),
-        'Address': userDetails.data!.address.toString(),
+        'Name :': userDetails.data!.name.toString().toUpperCase(),
+        'Username :': userDetails.data!.username.toString(),
+        'Contact :': userDetails.data!.contachNo.toString(),
+        'Email :': userDetails.data!.email.toString(),
+        'Address :': userDetails.data!.address.toString(),
       };
 
       _userDetailsController.add(userDetailsMap);
@@ -60,12 +60,8 @@ class _ProfileViewState extends State<ProfileView> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         leading: IconButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          icon: const Icon(
-            Icons.arrow_back_ios,
-          ),
+          onPressed: () => Navigator.pop(context),
+          icon: const Icon(CupertinoIcons.back),
         ),
         title: const Text("Profile"),
         centerTitle: true,
@@ -89,7 +85,7 @@ class _ProfileViewState extends State<ProfileView> {
                   ),
                   const SizedBox(height: 20),
                   Text(
-                    userDetailsMap['Username'] ?? '',
+                    userDetailsMap['Username :'] ?? '',
                     style: const TextStyle(
                         fontSize: 21,
                         color: AppColor.bgColor,

@@ -227,7 +227,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       }
                       if (usernameController.text.isNotEmpty &&
                           passwordController.text.isNotEmpty) {
-                        // Show loading indicator
                         showDialog(
                           context: context,
                           barrierDismissible: false,
