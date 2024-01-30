@@ -1,6 +1,7 @@
 import 'dart:async';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:chiya_talk/Basic/color_collection.dart';
 import '../../Model/Response/get_user_by_name_response.dart';
 import '../../Services/get_details_service.dart';
@@ -18,18 +19,27 @@ class ProfileView extends StatefulWidget {
 class _ProfileViewState extends State<ProfileView> {
   GetUserDetails getUserDetails = GetUserDetails();
   late StreamController<Map<String, String>> _userDetailsController;
+  bool isEditing = false;
+  late TextEditingController _nameController;
+  late TextEditingController _contactController;
+  late TextEditingController _addressController;
 
   @override
   void initState() {
     super.initState();
     _userDetailsController = StreamController<Map<String, String>>.broadcast();
+    _nameController = TextEditingController();
+    _contactController = TextEditingController();
+    _addressController = TextEditingController();
     fetchUserDetails();
-    setState(() {});
   }
 
   @override
   void dispose() {
     _userDetailsController.close();
+    _nameController.dispose();
+    _contactController.dispose();
+    _addressController.dispose();
     super.dispose();
   }
 
@@ -49,9 +59,19 @@ class _ProfileViewState extends State<ProfileView> {
       };
 
       _userDetailsController.add(userDetailsMap);
+
+      _nameController.text = userDetails.data!.name.toString();
+      _contactController.text = userDetails.data!.contachNo.toString();
+      _addressController.text = userDetails.data!.address.toString();
     } catch (error) {
       Text('Error fetching user details: $error');
     }
+  }
+
+  void toggleEditMode() {
+    setState(() {
+      isEditing = !isEditing;
+    });
   }
 
   @override
@@ -65,20 +85,26 @@ class _ProfileViewState extends State<ProfileView> {
         ),
         title: const Text("Profile"),
         centerTitle: true,
+        actions: [
+          IconButton(
+            icon: Icon(isEditing ? Icons.done : Icons.edit),
+            onPressed: toggleEditMode,
+          ),
+        ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: StreamBuilder<Map<String, String>>(
-          stream: _userDetailsController.stream,
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) {
-              return const CircularProgressIndicator();
-            }
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: StreamBuilder<Map<String, String>>(
+            stream: _userDetailsController.stream,
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return const CircularProgressIndicator();
+              }
 
-            final userDetailsMap = snapshot.data!;
+              final userDetailsMap = snapshot.data!;
 
-            return Form(
-              child: Column(
+              return Column(
                 children: [
                   const CircleAvatar(
                     radius: 80,
@@ -87,40 +113,135 @@ class _ProfileViewState extends State<ProfileView> {
                   Text(
                     userDetailsMap['Username :'] ?? '',
                     style: const TextStyle(
-                        fontSize: 21,
-                        color: AppColor.bgColor,
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: 1.6),
+                      fontSize: 21,
+                      color: AppColor.bgColor,
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: 1.6,
+                    ),
                   ),
                   const Divider(
                     height: 20,
                     thickness: 2,
                     color: AppColor.primaryColor,
                   ),
-                  ...userDetailsMap.entries.map((entry) {
-                    return ListTile(
-                      title: Text(
-                        entry.key,
-                        style: const TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w300,
-                            color: AppColor.bgColor),
+                  ListTile(
+                    title: const Text(
+                      'Name :',
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w300,
+                        color: AppColor.bgColor,
                       ),
-                      subtitle: Text(
-                        entry.value,
-                        style: const TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.w600,
-                            color: AppColor.bgColor),
+                    ),
+                    subtitle: isEditing
+                        ? TextFormField(
+                            controller: _nameController,
+                            decoration: InputDecoration(
+                              hintText: userDetailsMap['Name :'],
+                            ),
+                          )
+                        : Text(
+                            userDetailsMap['Name :']!,
+                            style: const TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.w600,
+                              color: AppColor.bgColor,
+                            ),
+                          ),
+                  ),
+                  ListTile(
+                    title: const Text(
+                      'Username :',
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w300,
+                        color: AppColor.bgColor,
                       ),
-                    );
-                  }),
+                    ),
+                    subtitle: Text(
+                      userDetailsMap['Username :']!,
+                      style: const TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w600,
+                        color: AppColor.bgColor,
+                      ),
+                    ),
+                  ),
+                  ListTile(
+                    title: const Text(
+                      'Contact :',
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w300,
+                        color: AppColor.bgColor,
+                      ),
+                    ),
+                    subtitle: isEditing
+                        ? TextFormField(
+                            controller: _contactController,
+                            decoration: InputDecoration(
+                              hintText: userDetailsMap['Contact :'],
+                            ),
+                          )
+                        : Text(
+                            userDetailsMap['Contact :'] ?? '',
+                            style: const TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.w600,
+                              color: AppColor.bgColor,
+                            ),
+                          ),
+                  ),
+                  ListTile(
+                    title: const Text(
+                      'Email :',
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w300,
+                        color: AppColor.bgColor,
+                      ),
+                    ),
+                    subtitle: Text(
+                      userDetailsMap['Email :']!,
+                      style: const TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w600,
+                        color: AppColor.bgColor,
+                      ),
+                    ),
+                  ),
+                  ListTile(
+                    title: const Text(
+                      'Address :',
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w300,
+                        color: AppColor.bgColor,
+                      ),
+                    ),
+                    subtitle: isEditing
+                        ? TextFormField(
+                            controller: _addressController,
+                            decoration: InputDecoration(
+                              hintText: userDetailsMap['Address :'],
+                            ),
+                          )
+                        : Text(
+                            userDetailsMap['Address :'] ?? '',
+                            style: const TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.w600,
+                              color: AppColor.bgColor,
+                            ),
+                          ),
+                  ),
                 ],
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
+      resizeToAvoidBottomInset: true,
     );
   }
 }
