@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:chiya_talk/View/home_screen.dart';
 import 'package:flutter/material.dart';
@@ -211,23 +210,14 @@ class _ProfileInfoState extends State<ProfileInfo> {
                   ),
                   onPressed: () async {
                     try {
-                      if (_pickedImage != null) {
-                        List<int> imageBytes =
-                            await _pickedImage!.readAsBytes();
-                        base64Image = base64Encode(imageBytes);
-                        imageName = _pickedImage!.path.split('/').last;
-                      }
-
                       final MeassgeResponse response =
                           await UpdateProfileSerice.update(
-                              widget.username,
-                              emailController.text,
-                              addressController.text,
-                              contactController.text,
-                              "",
-                              widget.token,
-                              imageName.toString(),
-                              base64Image.toString());
+                        widget.username,
+                        emailController.text,
+                        addressController.text,
+                        contactController.text,
+                        widget.token,
+                      );
 
                       if (response.message!.isNotEmpty) {
                         EasyLoading.showToast(response.message.toString());
@@ -235,8 +225,8 @@ class _ProfileInfoState extends State<ProfileInfo> {
                           context,
                           MaterialPageRoute(
                             builder: (context) => HomeScreen(
-                              profileImageUrl: profileImageUrl,
                               username: widget.username,
+                              token: widget.token,
                             ),
                           ),
                         );

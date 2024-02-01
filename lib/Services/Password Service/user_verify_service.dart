@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import '../Basic/base_url.dart';
-import '../Model/Request/forgot_pass_request.dart';
-import '../Model/Response/message_response.dart';
+import '../../Basic/base_url.dart';
+import '../../Model/Request/forgot_pass_request.dart';
+import '../../Model/Response/message_response.dart';
 
 class VerifyUserService {
   static const String loginEndpoint = "api/Password/Verify Email";

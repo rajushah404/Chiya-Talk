@@ -1,7 +1,11 @@
+import 'package:chiya_talk/Model/Response/message_response.dart';
+import 'package:chiya_talk/View/ForgotPasswordPage/password_confirm.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../Basic/color_collection.dart';
+import '../../Services/Password Service/otp_service.dart';
 
 class OTPPage extends StatefulWidget {
   const OTPPage({super.key, required this.username, required this.email});
@@ -124,7 +128,42 @@ class _OTPPageState extends State<OTPPage> {
                         fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
                   ),
-                  onPressed: () async {},
+                  onPressed: () async {
+                    final int parsedOTP = int.parse(oTPController.text);
+                    if (oTPController.text.isEmpty) {
+                      EasyLoading.showInfo("Please enter OTP");
+                      return;
+                    }
+
+                    try {
+                      final MeassgeResponse meassgeResponse =
+                          await VerifyOTPService.otpCheck(
+                              widget.username, widget.email, parsedOTP);
+                      if (meassgeResponse.statusCode!.isNotEmpty) {
+                        if (meassgeResponse.statusCode != "000") {
+                          EasyLoading.showInfo(
+                              meassgeResponse.message.toString());
+                          return;
+                        } else {
+                          EasyLoading.showSuccess("User verifird");
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ConfirmPassword(
+                                username: widget.username,
+                                email: widget.email,
+                                otp: parsedOTP,
+                              ),
+                            ),
+                          );
+                        }
+                      } else {
+                        EasyLoading.showError("Failed, Please try again !!");
+                      }
+                    } catch (e) {
+                      return EasyLoading.showError("$e");
+                    }
+                  },
                 ),
                 const SizedBox(
                   height: 120,

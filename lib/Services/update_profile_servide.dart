@@ -9,24 +9,20 @@ class UpdateProfileSerice {
   static const String loginEndpoint = "api/User/CompleteProfile";
 
   static Future<MeassgeResponse> update(
-      String username,
-      String email,
-      String address,
-      String contachNo,
-      String image,
-      String token,
-      String imageName,
-      String baseImageFile) async {
+    String username,
+    String email,
+    String address,
+    String contachNo,
+    String token,
+  ) async {
     final url = Uri.parse(BaseUrl.uri + loginEndpoint);
 
     final updateProfile = UpdateProfile(
-        username: username,
-        email: email,
-        address: address,
-        contachNo: contachNo,
-        image: image,
-        imageName: imageName,
-        baseImageFile: baseImageFile);
+      username: username,
+      email: email,
+      address: address,
+      contachNo: contachNo,
+    );
     try {
       final response = await http.post(
         url,

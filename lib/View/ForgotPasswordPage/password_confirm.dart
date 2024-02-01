@@ -1,25 +1,31 @@
-import 'package:chiya_talk/Basic/color_collection.dart';
-import 'package:chiya_talk/View/ForgotPasswordPage/otp_page.dart';
+import 'package:chiya_talk/Model/Response/message_response.dart';
+import 'package:chiya_talk/View/LoginPage/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../Model/Response/message_response.dart';
-import '../../Services/Password Service/user_verify_service.dart';
+import '../../Basic/color_collection.dart';
+import '../../Services/Password Service/confirm_password_service.dart';
 
-class Forgotpassword extends StatefulWidget {
-  const Forgotpassword({super.key});
+class ConfirmPassword extends StatefulWidget {
+  final String username;
+  final String email;
+  final int otp;
+  const ConfirmPassword(
+      {super.key,
+      required this.username,
+      required this.email,
+      required this.otp});
 
   @override
-  State<Forgotpassword> createState() => _ForgotpasswordState();
+  State<ConfirmPassword> createState() => _ConfirmPasswordState();
 }
 
-class _ForgotpasswordState extends State<Forgotpassword> {
-  TextEditingController usernameController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-
+class _ConfirmPasswordState extends State<ConfirmPassword> {
   @override
   Widget build(BuildContext context) {
+    TextEditingController passwordController = TextEditingController();
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColor.bgColor,
@@ -64,7 +70,7 @@ class _ForgotpasswordState extends State<Forgotpassword> {
                   child: Row(
                     children: [
                       Text(
-                        "Verify your username".toUpperCase(),
+                        "New Password".toUpperCase(),
                         style: GoogleFonts.montserrat(
                             color: AppColor.primaryColor,
                             fontSize: 13,
@@ -78,7 +84,7 @@ class _ForgotpasswordState extends State<Forgotpassword> {
                   child: TextFormField(
                     style: const TextStyle(color: Colors.white),
                     showCursor: false,
-                    controller: emailController,
+                    controller: passwordController,
                     decoration: InputDecoration(
                       border: const OutlineInputBorder(
                         borderSide: BorderSide(
@@ -91,7 +97,7 @@ class _ForgotpasswordState extends State<Forgotpassword> {
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 10.0, horizontal: 10.0),
                       label: Text(
-                        "Email".toUpperCase(),
+                        "Password".toUpperCase(),
                         style: GoogleFonts.montserrat(
                             fontSize: 12,
                             letterSpacing: 1.5,
@@ -101,65 +107,6 @@ class _ForgotpasswordState extends State<Forgotpassword> {
                         Icons.account_circle_outlined,
                         size: 20,
                         color: AppColor.textFiendFont,
-                      ),
-                    ),
-                    validator: (value) {
-                      if (value == "") {
-                        return "Email Required";
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                  child: TextFormField(
-                    style: const TextStyle(color: Colors.white),
-                    showCursor: false,
-                    controller: usernameController,
-                    decoration: InputDecoration(
-                      border: const OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: AppColor.textFiendFont,
-                        ),
-                      ),
-                      focusedBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(color: AppColor.primaryColor),
-                      ),
-                      contentPadding: const EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 10.0),
-                      label: Text(
-                        "Username".toUpperCase(),
-                        style: GoogleFonts.montserrat(
-                            fontSize: 12,
-                            letterSpacing: 1.5,
-                            color: AppColor.textFiendFont),
-                      ),
-                      prefixIcon: const Icon(
-                        Icons.account_circle_outlined,
-                        size: 20,
-                        color: AppColor.textFiendFont,
-                      ),
-                    ),
-                    validator: (value) {
-                      if (value == "") {
-                        return "Email Required";
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                Container(
-                  margin: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                  child: Center(
-                    child: Text(
-                      " OTP will be sent to your Email-ID".toUpperCase(),
-                      style: GoogleFonts.montserrat(
-                        color: AppColor.textFiendFont,
-                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
@@ -185,44 +132,44 @@ class _ForgotpasswordState extends State<Forgotpassword> {
                     textAlign: TextAlign.center,
                   ),
                   onPressed: () async {
-                    if (usernameController.text.isEmpty &&
-                        emailController.text.isEmpty) {
-                      EasyLoading.showInfo("Please fill the info");
+                    if (passwordController.text.isEmpty) {
+                      EasyLoading.showInfo("password connot be empty !!");
                       return;
                     }
-                    EasyLoading.show(status: 'Loading');
-                    try {
-                      final MeassgeResponse meassgeResponse =
-                          await VerifyUserService.userVerfify(
-                              usernameController.text, emailController.text);
+                    if (passwordController.text.isNotEmpty) {
+                      try {
+                        final MeassgeResponse meassgeResponse =
+                            await ConfirmPassswordService.confirmPassowrd(
+                                widget.username,
+                                widget.email,
+                                widget.otp,
+                                passwordController.text);
+                        if (meassgeResponse.statusCode!.isNotEmpty) {
+                          if (meassgeResponse.statusCode != "000") {
+                            EasyLoading.showInfo(
+                                meassgeResponse.message.toString());
+                            return;
+                          } else {
+                            EasyLoading.showSuccess(
+                                "Password changed sucessfully");
 
-                      if (meassgeResponse.statusCode!.isNotEmpty) {
-                        if (meassgeResponse.statusCode != "000") {
-                          EasyLoading.showInfo(
-                              meassgeResponse.message.toString());
-                          return;
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const LoginScreen()),
+                            );
+                          }
                         } else {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => OTPPage(
-                                username: usernameController.text,
-                                email: emailController.text,
-                              ),
-                            ),
-                          );
-                          EasyLoading.dismiss();
+                          EasyLoading.showError("Failed, Please try again !!");
                         }
-                      } else {
-                        EasyLoading.showError("Failed, Please try again !!");
+                      } catch (e) {
+                        return EasyLoading.showError("$e");
                       }
-                    } catch (e) {
-                      return EasyLoading.showError("$e");
                     }
                   },
                 ),
                 const SizedBox(
-                  height: 120,
+                  height: 50,
                 ),
                 Container(
                   margin: const EdgeInsets.all(20),

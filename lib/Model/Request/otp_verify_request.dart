@@ -1,11 +1,11 @@
-class OTPVerify {
+class OTPVerifyRequest {
   String? email;
   String? username;
   int? enteredOTP;
 
-  OTPVerify({this.email, this.username, this.enteredOTP});
+  OTPVerifyRequest({this.email, this.username, this.enteredOTP});
 
-  OTPVerify.fromJson(Map<String, dynamic> json) {
+  OTPVerifyRequest.fromJson(Map<String, dynamic> json) {
     email = json['email'];
     username = json['username'];
     enteredOTP = json['enteredOTP'];

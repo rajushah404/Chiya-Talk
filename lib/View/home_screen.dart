@@ -11,12 +11,10 @@ import '../Basic/common_use.dart';
 import '../Model/Response/get_user_by_name_response.dart';
 
 class HomeScreen extends StatefulWidget {
-  final String? profileImageUrl;
   final String? username;
   final String? token;
 
-  const HomeScreen({Key? key, this.profileImageUrl, this.username, this.token})
-      : super(key: key);
+  const HomeScreen({Key? key, this.username, this.token}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -27,13 +25,11 @@ class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> _globalKey = GlobalKey();
   GetUserDetails getUserDetails = GetUserDetails();
   String? name;
-  String? imagePath;
   String baseUrl = BaseUrl.uri;
 
   @override
   void initState() {
     super.initState();
-    profileImageUrl = widget.profileImageUrl;
     fetchUserDetails();
     setState(() {});
   }
@@ -45,7 +41,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
       setState(() {
         name = userDetails.data!.name.toString().toUpperCase();
-        imagePath = userDetails.data!.image.toString();
       });
     } catch (error) {
       Text('Error fetching user details: $error');
@@ -70,9 +65,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      CircleAvatar(
+                      const CircleAvatar(
                         radius: 45,
-                        backgroundImage: NetworkImage("$baseUrl$imagePath"),
                       ),
                       const SizedBox(
                         width: 25,

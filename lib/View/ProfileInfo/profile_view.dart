@@ -1,7 +1,7 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
 
+import 'package:chiya_talk/Services/update_profile_servide.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:chiya_talk/Basic/color_collection.dart';
@@ -11,7 +11,6 @@ import '../../Basic/base_url.dart';
 import '../../Model/Response/get_user_by_name_response.dart';
 import '../../Model/Response/message_response.dart';
 import '../../Services/get_details_service.dart';
-import '../../Services/update_user_data_service.dart';
 
 class ProfileView extends StatefulWidget {
   final String? username;
@@ -60,9 +59,7 @@ class _ProfileViewState extends State<ProfileView> {
   fetchUserDetails() async {
     try {
       GetUserByNameResponse userDetails = await getUserDetails.getUserDetails(
-        widget.username.toString(),
-        widget.token.toString(),
-      );
+          widget.username.toString(), widget.token.toString());
 
       imagePath = userDetails.data!.image;
 
@@ -89,22 +86,18 @@ class _ProfileViewState extends State<ProfileView> {
   }
 
   void updateProfile() async {
-    if (_pickedImage != null) {
-      List<int> imageBytes = await _pickedImage!.readAsBytes();
-      base64Image = base64Encode(imageBytes);
-      imageName = _pickedImage!.path.split('/').last;
-    }
+    // if (_pickedImage != null) {
+    //   List<int> imageBytes = await _pickedImage!.readAsBytes();
+    //   base64Image = base64Encode(imageBytes);
+    //   imageName = _pickedImage!.path.split('/').last;
+    // }
     try {
-      final MeassgeResponse response = await UpdateUserDataService.updateData(
-          _nameController.text,
+      final MeassgeResponse response = await UpdateProfileSerice.update(
           widget.username.toString(),
           email,
           _addressController.text,
           _contactController.text,
-          "",
-          widget.token!,
-          imageName.toString(),
-          base64Image.toString());
+          widget.token.toString());
 
       if (response.statusCode == "001") {
         EasyLoading.showToast(response.message.toString());
