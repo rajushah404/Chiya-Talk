@@ -1,6 +1,7 @@
 import 'package:chiya_talk/Basic/color_collection.dart';
 import 'package:chiya_talk/Model/Response/register_response.dart';
 import 'package:chiya_talk/Services/register_service.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -31,8 +32,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
               size: 25,
               color: AppColor.primaryColor,
             )),
-        elevation: 0,
-        // toolbarHeight: 70,
+        elevation: 2,
         backgroundColor: Colors.black,
         title: Text(
           "Register Here".toUpperCase(),
@@ -53,8 +53,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
           child: Column(
             children: [
               SizedBox(
-                // padding: EdgeInsets.all(10),
-                //margin: const EdgeInsets.all(10),
                 width: double.infinity,
                 child: Center(
                     child: Image.asset(
@@ -81,7 +79,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     contentPadding: const EdgeInsets.symmetric(
                         vertical: 10.0, horizontal: 10.0),
                     label: Text(
-                      "Name",
+                      "Full Name",
                       style: GoogleFonts.montserrat(
                           fontSize: 12,
                           letterSpacing: 1.5,
@@ -89,7 +87,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           fontWeight: FontWeight.bold),
                     ),
                     prefixIcon: const Icon(
-                      Icons.email_outlined,
+                      CupertinoIcons.person,
                       size: 20,
                       color: Colors.white,
                     ),

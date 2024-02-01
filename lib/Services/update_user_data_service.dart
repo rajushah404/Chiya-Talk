@@ -1,14 +1,14 @@
 import 'dart:convert';
+import 'package:chiya_talk/Model/Response/message_response.dart';
 import 'package:http/http.dart' as http;
-import 'package:chiya_talk/Model/Request/profile_update_request.dart';
-
 import '../Basic/base_url.dart';
-import '../Model/Response/message_response.dart';
+import '../Model/Request/update_user_data.dart';
 
-class UpdateProfileSerice {
-  static const String loginEndpoint = "api/User/CompleteProfile";
+class UpdateUserDataService {
+  static const String loginEndpoint = "api/User/UpdateProfile";
 
-  static Future<MeassgeResponse> update(
+  static Future<MeassgeResponse> updateData(
+      String name,
       String username,
       String email,
       String address,
@@ -19,7 +19,8 @@ class UpdateProfileSerice {
       String baseImageFile) async {
     final url = Uri.parse(BaseUrl.uri + loginEndpoint);
 
-    final updateProfile = UpdateProfile(
+    final updateProfiledata = UpdateUserData(
+        name: name,
         username: username,
         email: email,
         address: address,
@@ -34,7 +35,7 @@ class UpdateProfileSerice {
           'Content-Type': 'application/json',
           'Authorization': token,
         },
-        body: jsonEncode(updateProfile.toJson()),
+        body: jsonEncode(updateProfiledata.toJson()),
       );
       if (response.body.isNotEmpty) {
         final Map<String, dynamic> responseData = json.decode(response.body);

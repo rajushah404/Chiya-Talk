@@ -81,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         name.toString(),
                         style: const TextStyle(
                             color: AppColor.textFiendFont,
-                            fontSize: 18,
+                            fontSize: 14,
                             letterSpacing: 1.6),
                       )
                     ],

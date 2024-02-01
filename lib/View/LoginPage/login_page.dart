@@ -8,7 +8,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../Services/login_service.dart';
 import '../ForgotPasswordPage/forgot_password.dart';
-import '../ProfileInfo/profile_info.dart';
+import '../ProfileInfo/complete_profile.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({

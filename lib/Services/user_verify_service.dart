@@ -1,40 +1,25 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:chiya_talk/Model/Request/profile_update_request.dart';
-
 import '../Basic/base_url.dart';
+import '../Model/Request/forgot_pass_request.dart';
 import '../Model/Response/message_response.dart';
 
-class UpdateProfileSerice {
-  static const String loginEndpoint = "api/User/CompleteProfile";
-
-  static Future<MeassgeResponse> update(
-      String username,
-      String email,
-      String address,
-      String contachNo,
-      String image,
-      String token,
-      String imageName,
-      String baseImageFile) async {
+class VerifyUserService {
+  static const String loginEndpoint = "api/Password/Verify Email";
+  static Future<MeassgeResponse> userVerfify(
+    String username,
+    String email,
+  ) async {
     final url = Uri.parse(BaseUrl.uri + loginEndpoint);
 
-    final updateProfile = UpdateProfile(
-        username: username,
-        email: email,
-        address: address,
-        contachNo: contachNo,
-        image: image,
-        imageName: imageName,
-        baseImageFile: baseImageFile);
+    final verifyUser = VerifyUserRequest(username: username, email: email);
     try {
       final response = await http.post(
         url,
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': token,
         },
-        body: jsonEncode(updateProfile.toJson()),
+        body: jsonEncode(verifyUser.toJson()),
       );
       if (response.body.isNotEmpty) {
         final Map<String, dynamic> responseData = json.decode(response.body);

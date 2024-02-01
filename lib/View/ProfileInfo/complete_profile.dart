@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:chiya_talk/View/home_screen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -220,7 +218,7 @@ class _ProfileInfoState extends State<ProfileInfo> {
                         imageName = _pickedImage!.path.split('/').last;
                       }
 
-                      final MeaasgeResponse response =
+                      final MeassgeResponse response =
                           await UpdateProfileSerice.update(
                               widget.username,
                               emailController.text,
