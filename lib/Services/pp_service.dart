@@ -1,29 +1,19 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:chiya_talk/Model/Request/profile_update_request.dart';
-
 import '../Basic/base_url.dart';
+import '../Model/Request/update_pp_model.dart';
 import '../Model/Response/message_response.dart';
 
-class UpdateProfileSerice {
-  static const String loginEndpoint = "api/User/CompleteProfile";
-
-  static Future<MeassgeResponse> update(
-    String username,
-    String name,
-    String email,
-    String address,
-    String contachNo,
-    String token,
-  ) async {
+class PPService {
+  static const String loginEndpoint = "api/User/UpdateProfilePicture";
+  static Future<MeassgeResponse> ppUpdate(String? username, String? image,
+      String? imageName, String? baseImageFile, String token) async {
     final url = Uri.parse(BaseUrl.uri + loginEndpoint);
-
-    final updateProfile = UpdateProfile(
+    final updateProfilePicture = UpdatePPRequestModel(
+        image: image,
         username: username,
-        email: email,
-        address: address,
-        contachNo: contachNo,
-        name: name);
+        imageName: imageName,
+        baseImageFile: baseImageFile);
     try {
       final response = await http.post(
         url,
@@ -31,7 +21,7 @@ class UpdateProfileSerice {
           'Content-Type': 'application/json',
           'Authorization': token,
         },
-        body: jsonEncode(updateProfile.toJson()),
+        body: jsonEncode(updateProfilePicture.toJson()),
       );
       if (response.body.isNotEmpty) {
         final Map<String, dynamic> responseData = json.decode(response.body);

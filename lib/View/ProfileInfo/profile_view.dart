@@ -94,6 +94,7 @@ class _ProfileViewState extends State<ProfileView> {
     try {
       final MeassgeResponse response = await UpdateProfileSerice.update(
           widget.username.toString(),
+          _nameController.text,
           email,
           _addressController.text,
           _contactController.text,

@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'dart:io';
+import 'package:chiya_talk/Services/pp_service.dart';
 import 'package:chiya_talk/View/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -210,17 +212,39 @@ class _ProfileInfoState extends State<ProfileInfo> {
                   ),
                   onPressed: () async {
                     try {
+                      if (_pickedImage != null) {
+                        // Handling profile picture update
+                        List<int> imageBytes =
+                            await _pickedImage!.readAsBytes();
+                        base64Image = base64Encode(imageBytes);
+                        imageName = _pickedImage!.path.split('/').last;
+
+                        final MeassgeResponse messageResponse =
+                            await PPService.ppUpdate(
+                          widget.username,
+                          "",
+                          imageName,
+                          base64Image,
+                          widget.token,
+                        );
+
+                        EasyLoading.showToast(
+                            messageResponse.message.toString());
+                      }
+
+                      // Handling general profile information update
                       final MeassgeResponse response =
                           await UpdateProfileSerice.update(
-                        widget.username,
-                        emailController.text,
-                        addressController.text,
-                        contactController.text,
-                        widget.token,
-                      );
+                              widget.username,
+                              "",
+                              emailController.text,
+                              addressController.text,
+                              contactController.text,
+                              widget.token);
+
+                      EasyLoading.showToast(response.message.toString());
 
                       if (response.message!.isNotEmpty) {
-                        EasyLoading.showToast(response.message.toString());
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
@@ -232,7 +256,7 @@ class _ProfileInfoState extends State<ProfileInfo> {
                         );
                       }
                     } catch (e) {
-                      return EasyLoading.showError("$e");
+                      EasyLoading.showError("$e");
                     }
                   },
                 ),
