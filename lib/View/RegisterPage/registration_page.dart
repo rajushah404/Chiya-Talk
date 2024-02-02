@@ -213,8 +213,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       nameController.text,
                     );
                     if (registerResponse.message!.isNotEmpty) {
-                      if (registerResponse.message ==
-                          "Username Already exists") {
+                      if (registerResponse.statusCode == '001') {
                         EasyLoading.showInfo(
                             registerResponse.message.toString());
                         return;

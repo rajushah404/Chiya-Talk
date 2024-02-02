@@ -1,7 +1,8 @@
 import 'dart:io';
-
 import 'package:chiya_talk/Basic/color_collection.dart';
+import 'package:chiya_talk/Model/Response/get_profile_response_model.dart';
 import 'package:chiya_talk/Services/get_details_Service.dart';
+import 'package:chiya_talk/Services/get_profile_picture.dart';
 import 'package:chiya_talk/View/ProfileInfo/profile_view.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -24,6 +25,8 @@ class _HomeScreenState extends State<HomeScreen> {
   String? profileImageUrl;
   final GlobalKey<ScaffoldState> _globalKey = GlobalKey();
   GetUserDetails getUserDetails = GetUserDetails();
+  GetProfilePictureservice getProfilePictureservice =
+      GetProfilePictureservice();
   String? name;
   String baseUrl = BaseUrl.uri;
 
@@ -39,11 +42,18 @@ class _HomeScreenState extends State<HomeScreen> {
       GetUserByNameResponse userDetails = await getUserDetails.getUserDetails(
           widget.username.toString(), widget.token.toString());
 
+      GetProfilePictureModel getProfilePP =
+          await getProfilePictureservice.getProfilePicture(
+              widget.token.toString(), widget.username.toString());
+
       setState(() {
         name = userDetails.data!.name.toString().toUpperCase();
+        profileImageUrl = getProfilePP.userImage;
       });
     } catch (error) {
-      Text('Error fetching user details: $error');
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Error fetching user details. Please try again.'),
+      ));
     }
   }
 
@@ -65,8 +75,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const CircleAvatar(
+                      CircleAvatar(
                         radius: 45,
+                        backgroundImage:
+                            NetworkImage("$baseUrl$profileImageUrl"),
                       ),
                       const SizedBox(
                         width: 25,
@@ -259,13 +271,14 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget buildProfileAvatar({double? radius}) {
     return CircleAvatar(
       radius: radius ?? 50,
-      backgroundImage:
-          profileImageUrl != null ? FileImage(File(profileImageUrl!)) : null,
+      backgroundImage: profileImageUrl != null
+          ? NetworkImage("$baseUrl$profileImageUrl")
+          : null,
       backgroundColor: Colors.transparent,
       child: profileImageUrl != null
           ? ClipOval(
               child: Image(
-                image: FileImage(File(profileImageUrl!)),
+                image: NetworkImage("$baseUrl$profileImageUrl"),
                 fit: BoxFit.fill,
               ),
             )

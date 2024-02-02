@@ -37,6 +37,9 @@ class _ProfileViewState extends State<ProfileView> {
   String? base64Image;
   String? imageName;
 
+  String? username;
+  String? token;
+
   @override
   void initState() {
     super.initState();
@@ -85,12 +88,7 @@ class _ProfileViewState extends State<ProfileView> {
     }
   }
 
-  void updateProfile() async {
-    // if (_pickedImage != null) {
-    //   List<int> imageBytes = await _pickedImage!.readAsBytes();
-    //   base64Image = base64Encode(imageBytes);
-    //   imageName = _pickedImage!.path.split('/').last;
-    // }
+  updateProfile() async {
     try {
       final MeassgeResponse response = await UpdateProfileSerice.update(
           widget.username.toString(),
@@ -103,6 +101,8 @@ class _ProfileViewState extends State<ProfileView> {
       if (response.statusCode == "001") {
         EasyLoading.showToast(response.message.toString());
         fetchUserDetails();
+
+        setState(() {});
       }
     } catch (e) {
       return EasyLoading.showError("$e");
@@ -111,6 +111,7 @@ class _ProfileViewState extends State<ProfileView> {
 
   void toggleEditMode() {
     if (isEditing) {
+      setState(() {});
       updateProfile();
     }
     setState(() {

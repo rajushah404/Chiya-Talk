@@ -244,7 +244,7 @@ class _ProfileInfoState extends State<ProfileInfo> {
 
                       EasyLoading.showToast(response.message.toString());
 
-                      if (response.message!.isNotEmpty) {
+                      if (response.statusCode == '000') {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
