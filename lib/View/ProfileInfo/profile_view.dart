@@ -53,9 +53,9 @@ class _ProfileViewState extends State<ProfileView> {
   @override
   void dispose() {
     _userDetailsController.close();
-    _nameController.dispose();
-    _contactController.dispose();
-    _addressController.dispose();
+    _nameController.clear();
+    _contactController.clear();
+    _addressController.clear();
     super.dispose();
   }
 
@@ -98,11 +98,12 @@ class _ProfileViewState extends State<ProfileView> {
           _contactController.text,
           widget.token.toString());
 
-      if (response.statusCode == "001") {
+      if (response.statusCode == "000") {
         EasyLoading.showToast(response.message.toString());
         fetchUserDetails();
-
-        setState(() {});
+      } else {
+        EasyLoading.showToast(response.message.toString());
+        fetchUserDetails();
       }
     } catch (e) {
       return EasyLoading.showError("$e");
@@ -125,7 +126,7 @@ class _ProfileViewState extends State<ProfileView> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         leading: IconButton(
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => Navigator.of(context).pop(),
           icon: const Icon(CupertinoIcons.back),
         ),
         title: const Text("Profile"),

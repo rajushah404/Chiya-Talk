@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:chiya_talk/Basic/color_collection.dart';
 import 'package:chiya_talk/Model/Response/get_profile_response_model.dart';
 import 'package:chiya_talk/Services/get_details_Service.dart';
@@ -76,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       CircleAvatar(
-                        radius: 45,
+                        radius: 30,
                         backgroundImage:
                             NetworkImage("$baseUrl$profileImageUrl"),
                       ),
@@ -101,11 +100,17 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
                           builder: (context) => ProfileView(
-                                username: widget.username,
-                                token: widget.token,
-                              )));
+                            username: widget.username,
+                            token: widget.token,
+                          ),
+                        ),
+                      ).then((_) {
+                        fetchUserDetails();
+                      });
                     },
                     child: Card(
                       shape: Border.all(),
@@ -253,7 +258,6 @@ class _HomeScreenState extends State<HomeScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        buildProfileAvatar(radius: 16),
         const SizedBox(width: 8),
         Text(
           "ChiyaTalk",
@@ -268,30 +272,10 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget buildProfileAvatar({double? radius}) {
-    return CircleAvatar(
-      radius: radius ?? 50,
-      backgroundImage: profileImageUrl != null
-          ? NetworkImage("$baseUrl$profileImageUrl")
-          : null,
-      backgroundColor: Colors.transparent,
-      child: profileImageUrl != null
-          ? ClipOval(
-              child: Image(
-                image: NetworkImage("$baseUrl$profileImageUrl"),
-                fit: BoxFit.fill,
-              ),
-            )
-          : null,
-    );
-  }
-
   Widget buildBody() {
-    return Column(
+    return const Column(
       children: [
-        Center(
-          child: buildProfileAvatar(radius: 50),
-        ),
+        Center(child: Text("Test")),
       ],
     );
   }

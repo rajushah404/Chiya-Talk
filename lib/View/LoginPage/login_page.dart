@@ -262,7 +262,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => HomeScreen(
-                                              username: usernameController.text,
+                                              username:
+                                                  response.tokenInfo!.username,
                                               token: response.tokenInfo!.token
                                                   .toString(),
                                             )));
