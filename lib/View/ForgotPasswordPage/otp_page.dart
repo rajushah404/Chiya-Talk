@@ -24,7 +24,10 @@ class _OTPPageState extends State<OTPPage> {
       appBar: AppBar(
         backgroundColor: AppColor.bgColor,
         leading: IconButton(
-            onPressed: () => Navigator.of(context).pop(),
+            onPressed: () {
+              Navigator.of(context).pop();
+              oTPController.clear();
+            },
             icon: const Icon(
               Icons.arrow_back_ios,
               size: 25,
